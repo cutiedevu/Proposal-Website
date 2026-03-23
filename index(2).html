@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Will You Say Yes? 😂</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Confetti Library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    max-width: 400px;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.2s;
+}
+
+#yesBtn {
+    background: #4CAF50;
+    color: white;
+}
+
+#noBtn {
+    background: #f44336;
+    color: white;
+    position: absolute;
+}
+
+#message {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+.success {
+    font-size: 30px;
+    color: #4CAF50;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 id="question">
+Will you be my girlfriend? 💖
+</h1>
+
+<div class="buttons">
+
+<button id="yesBtn">
+YES 💖
+</button>
+
+<button id="noBtn">
+NO 💔
+</button>
+
+</div>
+
+<p id="message"></p>
+
+</div>
+
+<script>
+
+// Funny dramatic messages 😂
+
+const messages = [
+"Are you sure? 😢",
+"Really sure?? 😭",
+"Think again 😭",
+"Last chance 👀",
+"Why are you like this 😭",
+"This hurts 💔",
+"Please don't 😢",
+"I'm crying now 😭"
+];
+
+let messageIndex = 0;
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const messageText = document.getElementById("message");
+
+// Move NO button 🏃‍♂️
+
+noBtn.addEventListener("mouseover", () => {
+
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    // Show dramatic messages
+
+    messageText.textContent =
+        messages[messageIndex % messages.length];
+
+    messageIndex++;
+
+});
+
+
+// YES button celebration 🎉
+
+yesBtn.addEventListener("click", () => {
+
+    document.getElementById("question").innerHTML =
+        "YAYYYYY!!! 🎉<br>You said YES 💖";
+
+    messageText.innerHTML =
+        "<span class='success'>Mission Successful 💖</span>";
+
+    // Confetti 🎊
+
+    confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 }
+    });
+
+    sendWebhook();
+
+});
+
+
+// 🔔 OPTIONAL Webhook Function
+
+function sendWebhook() {
+
+    // ⚠ Replace with your webhook URL
+    const webhookURL = "YOUR_WEBHOOK_URL_HERE";
+
+    if (webhookURL === "YOUR_WEBHOOK_URL_HERE") return;
+
+    fetch(webhookURL, {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            content:
+"🔥 YES ACCEPTED! 💖\nSomeone clicked YES 🎉"
+        })
+
+    });
+
+}
+
+</script>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
